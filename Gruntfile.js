@@ -1,4 +1,4 @@
-// Generated on 2015-12-04 using
+// Generated on 2015-12-07 using
 // generator-webapp 1.1.0
 'use strict';
 
@@ -36,13 +36,13 @@ module.exports = function (grunt) {
         files: ['bower.json'],
         tasks: ['wiredep']
       },
-      babel: {
+      js: {
         files: ['<%= config.app %>/scripts/{,*/}*.js'],
-        tasks: ['babel:dist']
+        tasks: ['eslint']
       },
-      babelTest: {
+      jstest: {
         files: ['test/spec/{,*/}*.js'],
-        tasks: ['babel:test', 'test:watch']
+        tasks: ['test:watch']
       },
       gruntfile: {
         files: ['Gruntfile.js']
@@ -67,7 +67,7 @@ module.exports = function (grunt) {
             '<%= config.app %>/{,*/}*.html',
             '.tmp/styles/{,*/}*.css',
             '<%= config.app %>/images/{,*/}*',
-            '.tmp/scripts/{,*/}*.js'
+            '<%= config.app %>/scripts/{,*/}*.js'
           ],
           port: 9000,
           server: {
@@ -132,31 +132,6 @@ module.exports = function (grunt) {
           run: true,
           urls: ['http://<%= browserSync.test.options.host %>:<%= browserSync.test.options.port %>/index.html']
         }
-      }
-    },
-
-    // Compiles ES6 with Babel
-    babel: {
-      options: {
-        sourceMap: true
-      },
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= config.app %>/scripts',
-          src: '{,*/}*.js',
-          dest: '.tmp/scripts',
-          ext: '.js'
-        }]
-      },
-      test: {
-        files: [{
-          expand: true,
-          cwd: 'test/spec',
-          src: '{,*/}*.js',
-          dest: '.tmp/spec',
-          ext: '.js'
-        }]
       }
     },
 
@@ -348,15 +323,12 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up build process
     concurrent: {
       server: [
-        'babel:dist',
         'copy:styles'
       ],
       test: [
-        'babel',
         'copy:styles'
       ],
       dist: [
-        'babel',
         'copy:styles',
         'imagemin',
         'svgmin'

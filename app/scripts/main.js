@@ -1,1 +1,6 @@
-console.log('\'Allo \'Allo!'); // eslint-disable-line no-console
+$(function(){
+  var client = new WorkflowClient();
+  client.getTask(function(data){
+    console.log(data);
+  });
+});
