@@ -1,0 +1,166 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>Budgeting</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <script src="/bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+    
+  </head>
+  <body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    
+    <div class="container-fluid">
+      <h1>Department budget requirements</h1>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="list-group">
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">Department</h4>
+              <p class="list-group-item-text" id="department_name"></p> 
+            </a> 
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">Fiscal Year</h4>
+              <p class="list-group-item-text" id="fiscal_year"></p> 
+            </a> 
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">Expected increase</h4>
+              <p class="list-group-item-text" id="expected_increase"></p> 
+            </a> 
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">New investements allowed</h4>
+              <p class="list-group-item-text" id="new_investements"></p> 
+            </a> 
+          </div>      
+        </div>
+        <div class="col-lg-6">
+          <div class="list-group">
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">Target approval date</h4>
+              <p class="list-group-item-text" id="target_approval_date"></p> 
+            </a> 
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">Target expenses</h4>
+              <p class="list-group-item-text" id="target_expenses"></p> 
+            </a> 
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">Target submission</h4>
+              <p class="list-group-item-text" id="target_submission"></p> 
+            </a> 
+          </div>      
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-lg-12">
+            <h2>Add a project<br/><small>Specify the projects that you want to consider in your budget requirements</small></h2>
+          </div>
+          <div class="col-lg-8 col-lg-offset-2">
+            <form >
+              <div class="form-group">
+                <label class="sr-only" for="projectName">Project Name</label>
+                <input type="text" class="form-control" id="projectName" placeHolder="Project Name">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="projectResponsible">Project Responsible</label>
+                <select class="form-control" id="projectResponsible" placeHolder="Project Responsible"></select>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="targetBudget">targetBudget</label>
+                <input type="text" class="form-control" id="targetBudget" placeHolder="targetBudget">
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" rows="5" placeHolder="Notes" id="projectNotes"></textarea>
+              </div>
+              <div class="form-group pull-right">
+                <button type="button" class="btn btn-primary" id="addProject">Add project</button>
+              </div>
+            </form>
+          </div>
+      </div>
+      <div class="row" id="projects">
+
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <button type="button" class="btn btn-primary pull-right" id="submit">Submit</button>
+        </div>
+      </div>
+      <div class="footer">
+        <p><span class="glyphicon glyphicon-heart"></span> from the Everteam team</p>
+      </div>
+    </div>
+
+    <script type="text/html" id='project-template'>
+
+      <div class="col-lg-4 projectItem">
+        <div class="list-group">
+          <a href="#" class="list-group-item">
+            <h5 class="list-group-item-heading">Project name</h5>
+            <p class="list-group-item-text"><small><%= data.projectName %></small></p> 
+          </a> 
+          <a href="#" class="list-group-item">
+            <h5 class="list-group-item-heading">Project Responsible</h5>
+            <p class="list-group-item-text"><small><%= data.projectResponsibleDisplay %></small></p> 
+          </a> 
+          <a href="#" class="list-group-item">
+            <h5 class="list-group-item-heading">Target budget</h5>
+            <p class="list-group-item-text"><small><%= data.targetBudget %></small></p> 
+          </a> 
+          <a href="#" class="list-group-item">
+            <h5 class="list-group-item-heading">Notes</h5>
+            <p class="list-group-item-text"><small><%= data.projectNotes %></small></p> 
+          </a> 
+        </div> 
+      </div>
+    </script>
+    
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/lodash/lodash.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    
+    <!-- build:js(.) scripts/plugins.js -->
+    <script src="/bower_components/bootstrap/js/affix.js"></script>
+    <script src="/bower_components/bootstrap/js/alert.js"></script>
+    <script src="/bower_components/bootstrap/js/dropdown.js"></script>
+    <script src="/bower_components/bootstrap/js/tooltip.js"></script>
+    <script src="/bower_components/bootstrap/js/modal.js"></script>
+    <script src="/bower_components/bootstrap/js/transition.js"></script>
+    <script src="/bower_components/bootstrap/js/button.js"></script>
+    <script src="/bower_components/bootstrap/js/popover.js"></script>
+    <script src="/bower_components/bootstrap/js/carousel.js"></script>
+    <script src="/bower_components/bootstrap/js/scrollspy.js"></script>
+    <script src="/bower_components/bootstrap/js/collapse.js"></script>
+    <script src="/bower_components/bootstrap/js/tab.js"></script>
+    <!-- endbuild -->
+    
+
+    <!-- build:js scripts/main.js -->
+    <script src="scripts/workflow_client.js"></script>
+    <script src="scripts/requirements.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>
