@@ -22,7 +22,7 @@ var WorkflowClient = function (){
 
   var args = window.GetQueryString(query_string);
 
-  var base_url = window.location.protocol + '//' + window.location.host + '/intalio';
+  var base_url = window.location.protocol + '//' + window.location.host + '/intalio/ode/processes/';
 
   var caller = function(service_url,data_content){
     var deferred = $.Deferred();
@@ -41,14 +41,30 @@ var WorkflowClient = function (){
       }
 
     };
+    console.log(args);
     $.ajax(args);
     return deferred.promise();
   }
   var tms_caller = function (data_content) {
-    return caller(base_url + '/ode/processes/TaskManagementServices.TaskManagementServicesSOAP/',data_content);
+    return caller(base_url + 'TaskManagementServices.TaskManagementServicesSOAP/',data_content);
   }
   var complete_task_caller = function(data_content){
-    return caller(base_url + '/ode/processes/completeTask',data_content);
+    return caller(base_url + 'completeTask',data_content);
+  }
+  var init_process_caller = function(data_content){
+    return caller(base_url + 'Budgeting/Processes/Budgeting/Variable_Definition/Variable_DefinitionimplicitPartner/Variable_DefinitionimplicitPartnerAndVariable_DefinitionForPortTypeProcessPlk',data_content);
+  }
+  var action_caller = function(caller,content){
+    var deferred = $.Deferred();
+    caller(content).then(
+      function(data){
+        window.location.assign('/intalio/workflow/script/empty.jsp');
+        deferred.resolve(data);
+      },
+      function(err){
+        deferred.reject(err);
+      });
+
   }
  
   var client = {};
@@ -67,7 +83,6 @@ var WorkflowClient = function (){
     return tms_caller(data);
   }
   client.completeTask = function(output){
-    var deferred = $.Deferred();
     var content = {
       completeTaskRequest:{
         '@xmlns':{$:'http://www.intalio.com/bpms/workflow/ib4p_20051115'},
@@ -79,14 +94,24 @@ var WorkflowClient = function (){
         taskOutput:output
       }
     };
-    complete_task_caller(content).then(
-      function(data){
-        window.location.assign('empty.html');
-        deferred.resolve(data);
-      },
-      function(err){
-        deferred.reject(err);
-      }); 
+    action_caller(complete_task_caller,content);
+  }
+  client.initProcess = function(ns,form_url,output){
+    var deferred = $.Deferred();
+    var content = {
+      "init:initProcessRequest":{
+        "@xmlns": {'init':ns},
+        "init:taskId":{$:client.id},
+        "init:participantToken":{$:client.token},
+        "init:globalAttachments":{},
+        "init:attachments":{},
+        "init:user":{$:client.user},
+        "init:formUrl":{$:form_url},
+        "init:taskOutput":output
+      }
+    };
+    console.log(content);
+    action_caller(init_process_caller,content)
   }
   return client;
   

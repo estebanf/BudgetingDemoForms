@@ -1,5 +1,4 @@
 $(function(){
-  console.log("Started");
   var client = new WorkflowClient();
   var results = client.getTask();
 

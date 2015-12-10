@@ -16,6 +16,8 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="/bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.css" />
+    <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -33,47 +35,72 @@
 
     
     <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted">Budgeting</h3>
-      </div>
-
-      <div class="jumbotron">
-        <h1>'Allo, 'Allo!</h1>
-        <p class="lead">Always a pleasure scaffolding your2222 apps.</p>
-        <p><a class="btn btn-lg btn-success" href="#">Splendid! <span class="glyphicon glyphicon-ok"></span></a></p>
-      </div>
-
-      <div class="row marketing">
-        <div class="col-lg-6">
-          <h4><a href="https://html5boilerplate.com/">HTML5 Boilerplate</a></h4>
-          <p>HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.</p>
-
-          
-
-          <h4><a href="http://getbootstrap.com/">Bootstrap</a></h4>
-          <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
-
-          <h4><a href="http://modernizr.com/">Modernizr</a></h4>
-          <p>Modernizr is an open-source JavaScript library that helps you build the next generation of HTML5 and CSS3-powered websites.</p>
-          
+      <div class="row">
+        <div clas="col-lg-4">
+          <h1>Define budgeting process variables</h1>
+          <form class="form-horizontal" id="initForm">
+            <div class="form-group" >
+              <label for="fiscalYear" class="col-sm-5 control-label">Fiscal Year</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="fiscalYear" placeholder="Fiscal year">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="targetOperationalExpenses" class="col-sm-5 control-label">Target operational expenses</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="targetOperationalExpenses" placeholder="Target operational expenses">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="expectedIncreaseOnExpenses" class="col-sm-5 control-label">Expected increase on expenses</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="expectedIncreaseOnExpenses" readonly placeholder="Expected increase on expenses" value="0%">
+                <div id="expensesSlider"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-5 control-label">New investments allowed</label>
+              <div class="col-sm-7">
+                <label class="radio-inline">
+                  <input type="radio" name="newInvestements" id="inlineRadio1" value="No"> No
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="newInvestements" id="inlineRadio2" value="Yes"> Yes
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="newInvestements" id="inlineRadio3" value="HighPriority"> Only high priority
+                </label>
+            </div>
+            <div class="form-group">
+              <label for="targetSumissionDate" class="col-sm-5 control-label">Target Submission date</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="targetSumissionDate" placeholder="Target Submission date">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="targetApprovalDate" class="col-sm-5 control-label">Target Approval date</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="targetApprovalDate" placeholder="Target Approval date">
+              </div>
+            </div>
+          </form>
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-primary pull-right" id="btnInitProcess">Init process</button>
+          </div>
         </div>
       </div>
-
-      <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
     </div>
+
     
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/lodash/lodash.js"></script>
+    <script src="/bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js"></script>
+    <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+    <script src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

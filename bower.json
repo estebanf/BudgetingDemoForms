@@ -4,7 +4,9 @@
   "dependencies": {
     "bootstrap": "~3.3.5",
     "modernizr": "~2.8.3",
-    "lodash": "~3.10.1"
+    "lodash": "~3.10.1",
+    "seiyria-bootstrap-slider": "~5.3.1",
+    "eonasdan-bootstrap-datetimepicker": "~4.17.37"
   },
   "overrides": {
     "bootstrap": {
