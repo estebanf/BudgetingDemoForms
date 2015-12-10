@@ -103,8 +103,8 @@ var WorkflowClient = function (){
         "@xmlns": {'init':ns},
         "init:taskId":{$:client.id},
         "init:participantToken":{$:client.token},
-        "init:globalAttachments":{},
-        "init:attachments":{},
+        // "init:globalAttachments":{},
+        // "init:attachments":{},
         "init:user":{$:client.user},
         "init:formUrl":{$:form_url},
         "init:taskOutput":output

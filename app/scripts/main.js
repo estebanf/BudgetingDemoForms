@@ -35,7 +35,7 @@ $(function(){
         "@xmlns":{"bus":"http://budgeting.example.everteam.com/Types/Business"},
         "bus:fiscal_year":{$:$("#fiscalYear").val()},
         "bus:target_expenses":{$:$("#targetOperationalExpenses").val()},
-        "bus:ExpectedIncrease":{$:$("#expensesSlider").val()/100},
+        "bus:ExpectedIncrease":{$:($("#expensesSlider").val()/100) + ""},
         "bus:new_investements":{$:$("#initForm input[name='newInvestements']:checked").val()},
         "bus:TargetSubmision":{$:$("#targetSumissionDate").val()},
         "bus:TargetApproval":{$:$("#targetSumissionDate").val()}
