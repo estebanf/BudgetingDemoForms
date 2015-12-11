@@ -14,10 +14,10 @@ $(function(){
   var today = moment();
   $("#targetSumissionDate").datetimepicker({
     minDate: today,
-    format:'L'
+    format:'MM-DD-YYYY'
   });
   $("#targetApprovalDate").datetimepicker({
-    format:'L',
+    format:'MM-DD-YYYY',
     useCurrent: false
   });
   $("#targetSumissionDate").on("dp.change", function (e) {
@@ -28,7 +28,9 @@ $(function(){
   });
 
   var client = new WorkflowClient();
-  console.log(client);
+  if(!client.token){
+    $("#tokenProblem").modal();
+  }
   $("#btnInitProcess").click(function(){
     var output = {
       "Variables":{
@@ -41,7 +43,7 @@ $(function(){
         "TargetApproval":{$:$("#targetSumissionDate").val()}
       }
     }
-    client.initProcess("http://www.intalio.com/Budgeting/Webcontents/index.html","index.html",output);
+    client.initProcess("index.html",output);
   });
 
 });

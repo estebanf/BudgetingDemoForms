@@ -1,5 +1,8 @@
 $(function(){
   var client = new WorkflowClient();
+  if(!client.token){
+    $("#tokenProblem").modal();
+  }  
   var results = client.getTask();
 
   results.then(function(data){

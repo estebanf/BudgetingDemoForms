@@ -3,12 +3,10 @@
 var WorkflowClient = function (){
   window.GetQueryString = function(q) {
     return (function(a) {
-      console.log(a);
       if (a == '') return {};
       var b = {};
       for (var i = 0; i < a.length; ++i) {
         var p = a[i].split('=');
-        console.log(p);
         if (p.length != 2) continue;
         b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, ' '));
       }
@@ -43,7 +41,6 @@ var WorkflowClient = function (){
       }
 
     };
-    console.log(args);
     $.ajax(args);
     return deferred.promise();
   }
@@ -61,6 +58,7 @@ var WorkflowClient = function (){
         deferred.resolve(data);
       },
       function(err){
+        console.log(err);
         deferred.reject(err);
       });
 
@@ -101,7 +99,7 @@ var WorkflowClient = function (){
       "initProcessRequest":{
         "@xmlns": {$:'http://www.intalio.com/BPMS/Workflow/TaskManagementServices-20051109/'},
         "taskId":{$:client.id},
-        "input":{$:output},
+        "input":output,
         "participantToken":{$:client.token},
         "formUrl":{$:form_url},
       }
