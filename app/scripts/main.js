@@ -28,17 +28,17 @@ $(function(){
   });
 
   var client = new WorkflowClient();
-  
+  console.log(client);
   $("#btnInitProcess").click(function(){
     var output = {
-      "bus:Variables":{
-        "@xmlns":{"bus":"http://budgeting.example.everteam.com/Types/Business"},
-        "bus:fiscal_year":{$:$("#fiscalYear").val()},
-        "bus:target_expenses":{$:$("#targetOperationalExpenses").val()},
-        "bus:ExpectedIncrease":{$:($("#expensesSlider").val()/100) + ""},
-        "bus:new_investements":{$:$("#initForm input[name='newInvestements']:checked").val()},
-        "bus:TargetSubmision":{$:$("#targetSumissionDate").val()},
-        "bus:TargetApproval":{$:$("#targetSumissionDate").val()}
+      "Variables":{
+        "@xmlns":{$:"http://budgeting.example.everteam.com/Types/Business"},
+        "fiscal_year":{$:$("#fiscalYear").val()},
+        "target_expenses":{$:$("#targetOperationalExpenses").val()},
+        "ExpectedIncrease":{$:($("#expensesSlider").val()/100) + ""},
+        "new_investements":{$:$("#initForm input[name='newInvestements']:checked").val()},
+        "TargetSubmision":{$:$("#targetSumissionDate").val()},
+        "TargetApproval":{$:$("#targetSumissionDate").val()}
       }
     }
     client.initProcess("http://www.intalio.com/Budgeting/Webcontents/index.html","index.html",output);

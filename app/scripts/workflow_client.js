@@ -3,10 +3,12 @@
 var WorkflowClient = function (){
   window.GetQueryString = function(q) {
     return (function(a) {
+      console.log(a);
       if (a == '') return {};
       var b = {};
       for (var i = 0; i < a.length; ++i) {
         var p = a[i].split('=');
+        console.log(p);
         if (p.length != 2) continue;
         b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, ' '));
       }
@@ -51,9 +53,6 @@ var WorkflowClient = function (){
   var complete_task_caller = function(data_content){
     return caller(base_url + 'completeTask',data_content);
   }
-  var init_process_caller = function(data_content){
-    return caller(base_url + 'Budgeting/Processes/Budgeting/Variable_Definition/Variable_DefinitionimplicitPartner/Variable_DefinitionimplicitPartnerAndVariable_DefinitionForPortTypeProcessPlk',data_content);
-  }
   var action_caller = function(caller,content){
     var deferred = $.Deferred();
     caller(content).then(
@@ -96,22 +95,18 @@ var WorkflowClient = function (){
     };
     action_caller(complete_task_caller,content);
   }
-  client.initProcess = function(ns,form_url,output){
+  client.initProcess = function(form_url,output){
     var deferred = $.Deferred();
     var content = {
-      "init:initProcessRequest":{
-        "@xmlns": {'init':ns},
-        "init:taskId":{$:client.id},
-        "init:participantToken":{$:client.token},
-        // "init:globalAttachments":{},
-        // "init:attachments":{},
-        "init:user":{$:client.user},
-        "init:formUrl":{$:form_url},
-        "init:taskOutput":output
+      "initProcessRequest":{
+        "@xmlns": {$:'http://www.intalio.com/BPMS/Workflow/TaskManagementServices-20051109/'},
+        "taskId":{$:client.id},
+        "input":{$:output},
+        "participantToken":{$:client.token},
+        "formUrl":{$:form_url},
       }
     };
-    console.log(content);
-    action_caller(init_process_caller,content)
+    action_caller(tms_caller,content)
   }
   return client;
   
