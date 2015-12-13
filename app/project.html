@@ -1,0 +1,180 @@
+<!--
+?id=f2591feec592e9ab:54cb65a2:1516d9080db:-7feb172.17.0.2399&type=PATask&url=%2Fintalio%2Fgi%2Fapppath%2FBudgeting%2FForms%2FDirectorRequirementsDefinition.gi%2FIntalioInternal%2FServerLaunch.html&token=H4sIAAAAAAAAAG2Ry07DMBBFf4XVrHgk5FUvLMEiG5CKVCIqEJtpMwmj_BHZCSV-jyNRQlW8sXSv58ydcfX0WK4BRk9OSvpC3Svy73RgpRi1B2DvR6qljNNUZLHIsySJo1neWtc1yh7ua81GygaVp1l-Hntyp6KzAfoHr9FgS_5y6RcuO1F4WrPvFU5r1CRlqVlNF9vfLKSRVeAc0939AK73VgM07PxglkIAhUdhYcyT-k9H77k1m5D1PCqAsWYfjKskF7diVRRRXuRFnMZJATCwJj_EipM1rcQ8ThscKTnavH00KJrqoYyyDl-MTff5yrvVLpIQTjV-wzdja4QYjAEAAA==&user=examples%5Cewilliams&claimTaskOnOpen=false"
+-->
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>Budgeting</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="/bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.css" />
+    <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <script src="/bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+    
+  </head>
+  <body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+  <div class="modal fade" id="tokenProblem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Bad token</h4>
+        </div>
+        <div class="modal-body">
+          Token is incorrect
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+    <div class="container">
+      <div class="row">
+        <div clas="col-lg-4">
+          <h1><span  id="ProjectName"></span><br><small>Budget justification</small></h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="list-group">
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">New Project</h4>
+              <p class="list-group-item-text" id="target_budget"></p> 
+            </a> 
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">Notes</h4>
+              <p class="list-group-item-text" id="notes"></p> 
+            </a> 
+          </div>
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <form class="form-horizontal" id="initForm">
+            <div class="form-group">
+              <label class="col-sm-5 control-label">New Project</label>
+              <div class="col-sm-7">
+                <label class="radio-inline">
+                  <input type="radio" name="newProject" id="newProject1" value="No"> No
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="newProject" id="newProject2" value="Yes"> Yes
+                </label>
+              </div>
+            </div>
+            <div class="form-group" >
+              <label for="fiscalYear" class="col-sm-5 control-label">Last year budget</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="lastYearBudget" placeholder="Last year budget">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="targetOperationalExpenses" class="col-sm-5 control-label">Requested budget</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="budget" placeholder="Requested budget">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="targetOperationalExpenses" class="col-sm-5 control-label">Priority</label>
+              <div class="col-sm-7">
+                <select id="priority" class="form-control">
+                  <option id="High" value="High">High</option>
+                  <option id="Medium" value="Medium">Medium</option>
+                  <option id="Low" value="Low">Low</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="targetSumissionDate" class="col-sm-5 control-label">Start execution</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="startExecution" placeholder="Start Execution">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="targetApprovalDate" class="col-sm-5 control-label">End execution</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="endExecution" placeholder="End execution">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="targetOperationalExpenses" class="col-sm-5 control-label">Description</label>
+              <div class="col-sm-7">
+                <textarea class="form-control" id="description" placeholder="Description"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="targetOperationalExpenses" class="col-sm-5 control-label">Justification</label>
+              <div class="col-sm-7">
+                <textarea class="form-control" id="justification" placeholder="Justification"></textarea>
+              </div>
+            </div>
+          </form>
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-primary pull-right" id="submit">Submit</button>
+          </div>
+
+        </div>    
+      </div>
+    </div>
+
+    
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/lodash/lodash.js"></script>
+    <script src="/bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js"></script>
+    <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+    <script src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    
+    <!-- build:js(.) scripts/plugins.js -->
+    <script src="/bower_components/bootstrap/js/affix.js"></script>
+    <script src="/bower_components/bootstrap/js/alert.js"></script>
+    <script src="/bower_components/bootstrap/js/dropdown.js"></script>
+    <script src="/bower_components/bootstrap/js/tooltip.js"></script>
+    <script src="/bower_components/bootstrap/js/modal.js"></script>
+    <script src="/bower_components/bootstrap/js/transition.js"></script>
+    <script src="/bower_components/bootstrap/js/button.js"></script>
+    <script src="/bower_components/bootstrap/js/popover.js"></script>
+    <script src="/bower_components/bootstrap/js/carousel.js"></script>
+    <script src="/bower_components/bootstrap/js/scrollspy.js"></script>
+    <script src="/bower_components/bootstrap/js/collapse.js"></script>
+    <script src="/bower_components/bootstrap/js/tab.js"></script>
+    <!-- endbuild -->
+    
+
+    <!-- build:js scripts/lib.js -->
+    <script src="scripts/workflow_client.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/project.js -->
+    <script src="scripts/project.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>
