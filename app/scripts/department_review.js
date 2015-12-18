@@ -5,11 +5,11 @@ $(function(){
   }  
   var projectTemplate = _.template($("#project-template").html());
   var results = client.getTask();
-
+  var ProjectDepartmentIdentifier = {};
 
   results.then(function(data){
-
-    var input_data = data['tms:getTaskResponse']['tms:task']['tms:input'].ProjectDepartmentIdentifier;
+    ProjectDepartmentIdentifier = data['tms:getTaskResponse']['tms:task']['tms:input'];
+    var input_data = ProjectDepartmentIdentifier.ProjectDepartmentIdentifier;
     var departmentId= input_data.DepartmentId.$;
     var exerciseId = input_data.ExcerciseId.$;
     var updateProject = function(projectId,budget,priority,enabled, callback){
@@ -60,8 +60,9 @@ $(function(){
       var new_budget = row.find("input[type='text']").val();
       var new_priority = row.find("select").val();
       var new_enabled = (row.find("input[type='checkbox']").is(":checked")) ? "true":"false";
+      $("#submit").prop('disabled', true).text("Loading");
       updateProject(pid,new_budget,new_priority,new_enabled,function(response_data,status,jqxhr){
-        console.log(response_data);
+        $("#submit").prop('disabled', false).text("Submit")
       })
     }
     $.ajax({
@@ -149,23 +150,6 @@ $(function(){
     console.log(error);
   });
   $("#submit").click(function(){
-    var output = {
-      "tns:RequirementDefinisionOutput":{
-        "@xmlns" : {'tns':'http://budgeting.example.everteam.com/Types/Business'},
-        "tns:Projects": _.map($(".projectItem"),function(item){
-          var data= $(item).data();
-          return {
-            "tns:ProjectName":
-              {"$":data.projectName},
-            "tns:ProjectResponsible":
-              {"$":data.projectResponsibleValue},
-            "tns:TargetBudget":
-              {"$":data.targetBudget},
-            "tns:Notes":
-              {"$":data.projectNotes}};
-        })
-      }
-    };
-    client.completeTask(output);
+    client.completeTask(ProjectDepartmentIdentifier);
   });
 }); 
