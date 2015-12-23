@@ -1,0 +1,179 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>Budgeting</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="/bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.css" />
+    <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="/bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" />
+
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <script src="/bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+    
+  </head>
+  <body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+  <div class="modal fade" id="tokenProblem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" project-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Bad token</h4>
+        </div>
+        <div class="modal-body">
+          Token is incorrect
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" project-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="container-fluid">
+      <h1>Review budget projects</h1>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="list-group">
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">Fiscal Year</h4>
+              <p class="list-group-item-text" id="fiscal_year"></p> 
+            </a> 
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">Expected increase</h4>
+              <p class="list-group-item-text" id="expected_increase"></p> 
+            </a> 
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">New investements allowed</h4>
+              <p class="list-group-item-text" id="new_investements"></p> 
+            </a> 
+          </div>      
+        </div>
+        <div class="col-lg-6">
+          <div class="list-group">
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">Target approval date</h4>
+              <p class="list-group-item-text" id="target_approval_date"></p> 
+            </a> 
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">Target expenses</h4>
+              <p class="list-group-item-text" id="target_expenses"></p> 
+            </a> 
+            <a href="#" class="list-group-item">
+              <h4 class="list-group-item-heading">Target submission</h4>
+              <p class="list-group-item-text" id="target_submission"></p> 
+            </a> 
+          </div>      
+        </div>
+      </div>
+      <div id="holder"></div>
+      <div class="row">
+        <div class="col-lg-12">
+          <button type="button" class="btn btn-primary pull-right" id="submit">Submit</button>
+        </div>
+      </div>
+    </div>
+    <p>
+    <div class="footer">
+      <p><span class="glyphicon glyphicon-heart"></span> from the Everteam team</p>
+    </div>
+    </div>
+
+    <script type="text/html" id='department-template'>
+      <div class="row">
+        <h3><%=data.name %></h3>
+      </div> 
+      <div class="row table-responsive">
+        <table class="table table-bordered table-hover table-condensed">
+          <thead>
+            <th>Name</th>
+            <th>Priority</th>
+            <th>Target budget</th>
+            <th>Requested budget</th>
+            <th>New project</th>
+            <th>Last year budget</th>
+            <th>Description</th>
+            <th>Justification</th>
+            <th>Attachments</th>
+            <th>Approved</th>
+          </thead>
+          <tbody id="projects">
+          <% _.each(data.projects,function(project) { %>
+            <tr class="projectItem success">
+              <td><%= project.projectName %></td>
+              <td><%= project.priority %></td>
+              <td><%= project.targetBudget %></td>
+              <td><%= project.requested_budget %></td>
+              <td><%= project.new_project %></td>
+              <td><%= project.last_year %></td>
+              <td><%= project.description %></td>
+              <td><%= project.justification %></td>
+              <td><ul>
+                <% _.each(project.attachments,function(attach){ %>
+                <li><a href="<%= attach.url %>"><%= attach.title %></a></li>
+                <% }) %>
+                </ul>
+              </td>
+              <td><input type="checkbox" checked></td>
+            </tr>
+          <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </script>
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/lodash/lodash.js"></script>
+    <script src="/bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js"></script>
+    <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+    <script src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    
+    <!-- build:js(.) scripts/plugins.js -->
+    <script src="/bower_components/bootstrap/js/affix.js"></script>
+    <script src="/bower_components/bootstrap/js/alert.js"></script>  
+    <script src="/bower_components/bootstrap/js/dropdown.js"></script>
+    <script src="/bower_components/bootstrap/js/tooltip.js"></script> 
+    <script src="/bower_components/bootstrap/js/modal.js"></script>
+    <script src="/bower_components/bootstrap/js/transition.js"></script>
+    <script src="/bower_components/bootstrap/js/button.js"></script>
+    <script src="/bower_components/bootstrap/js/popover.js"></script>
+    <script src="/bower_components/bootstrap/js/carousel.js"></script>
+    <script src="/bower_components/bootstrap/js/scrollspy.js"></script>
+    <script src="/bower_components/bootstrap/js/collapse.js"></script>
+    <script src="/bower_components/bootstrap/js/tab.js"></script>
+    <!-- endbuild -->
+    
+
+    <!-- build:js scripts/lib.js -->
+    <script src="scripts/workflow_client.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/budget_review.js -->
+    <script src="scripts/budget_review.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>

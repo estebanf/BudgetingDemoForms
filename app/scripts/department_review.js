@@ -42,6 +42,9 @@ $(function(){
               },
            'tec:included':{
                 $:enabled + ""
+              },
+           'tec:approved':{
+                $:"true"
               }
           }
         }),
